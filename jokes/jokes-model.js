@@ -23,3 +23,9 @@ async function add(joke) {
 
   return findById(id);
 }
+
+function remove(id) {
+  return db("jokes")
+    .where({ id })
+    .del();
+}

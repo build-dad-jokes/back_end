@@ -23,3 +23,9 @@ function findById(id) {
     .where({ id })
     .first();
 }
+
+function remove(id) {
+  return db("users")
+    .where({ id })
+    .del();
+}
