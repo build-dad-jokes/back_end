@@ -6,6 +6,9 @@ exports.up = function(knex) {
       .string("joke", 255)
       .notNullable()
       .unique();
+
+    tbl.string("punchline", 255).notNullable();
+
     tbl
       .integer("user_id")
       .unsigned()
