@@ -5,8 +5,33 @@ module.exports = {
   find,
   findById,
   update,
-  remove
+  remove,
+  filter,
+  intToBoolean,
+  convertBoolean
 };
+
+function intToBoolean(int) {
+  return int === 1 ? true : false;
+}
+
+function convertBoolean(jokes) {
+  const result = {
+    ...jokes,
+    public: intToBoolean(jokes.public)
+  };
+  return result;
+}
+
+function filter() {
+  let loadJokes = db("jokes").where({
+    public: true
+  });
+
+  return loadJokes.then(jokes => {
+    return jokes.map(joke => helper.convertBoolean(joke));
+  });
+}
 
 function find() {
   return db("jokes").select("id", "joke");

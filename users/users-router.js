@@ -20,16 +20,16 @@ router.get("/:id", restricted, checkRole("User"), (req, res) => {
     .catch(error => res.send(error));
 });
 
-// router.post("/", (req, res) => {
-//   Users.add(req.body)
-//     .then(user => {
-//       res.status(201).json(user);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//       res.status(500).json({ message: "server error adding user" });
-//     });
-// });
+router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userJokes = await Users.get(id);
+
+    res.status(200).json(userJokes);
+  } catch (err) {
+    res.status(500).json({ success: false, err });
+  }
+});
 
 router.put("/:id", restricted, checkRole("User"), (req, res) => {
   const { id } = req.params;

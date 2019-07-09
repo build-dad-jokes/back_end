@@ -1,4 +1,4 @@
-exports.up = function(knex) {
+exports.up = function(knex, Promise) {
   return knex.schema.createTable("jokes", tbl => {
     tbl.increments();
 
@@ -10,8 +10,14 @@ exports.up = function(knex) {
     tbl.string("punchline", 255).notNullable();
 
     tbl
+      .boolean("public")
+      .notNullable()
+      .defaultTo(true);
+
+    tbl
       .integer("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("users")
       .onDelete("CASCADE")

@@ -6,7 +6,8 @@ module.exports = {
   findBy,
   findById,
   update,
-  remove
+  remove,
+  getUserJokes
 };
 
 function find() {
@@ -45,4 +46,12 @@ function remove(id) {
   return db("users")
     .where({ id })
     .del();
+}
+
+function getUserJokes(id) {
+  let loadJokes = db("jokes").where("user_id", id);
+
+  return loadJokes.then(jokes => {
+    return jokes.map(joke => helper.convertBoolean(joke));
+  });
 }
