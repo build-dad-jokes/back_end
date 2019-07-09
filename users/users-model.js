@@ -4,11 +4,19 @@ module.exports = {
   add,
   find,
   findById,
+  update,
   remove
 };
 
 function find() {
   return db("users").select("id", "username");
+}
+
+function findById(id) {
+  return db("users")
+    .select("id", "username")
+    .where({ id })
+    .first();
 }
 
 async function add(user) {
@@ -17,11 +25,15 @@ async function add(user) {
   return findById(id);
 }
 
-function findById(id) {
+function update(id, changes) {
   return db("users")
-    .select("id", "username")
     .where({ id })
-    .first();
+    .update(changes)
+    .then(() => {
+      return db("users")
+        .where({ id })
+        .first();
+    });
 }
 
 function remove(id) {

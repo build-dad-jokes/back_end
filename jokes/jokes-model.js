@@ -4,6 +4,7 @@ module.exports = {
   add,
   find,
   findById,
+  update,
   remove
 };
 
@@ -22,6 +23,17 @@ async function add(joke) {
   const [id] = await db("jokes").insert(joke);
 
   return findById(id);
+}
+
+function update(id, changes) {
+  return db("jokes")
+    .where({ id })
+    .update(changes)
+    .then(() => {
+      return db("jokes")
+        .where({ id })
+        .first();
+    });
 }
 
 function remove(id) {
