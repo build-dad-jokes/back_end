@@ -1,6 +1,7 @@
 const db = require("../data/dbConfig");
 
 module.exports = {
+  get,
   add,
   find,
   findBy,
@@ -60,6 +61,30 @@ function remove(id) {
   return db("users")
     .where({ id })
     .del();
+}
+
+function get(id) {
+  let users = db("users");
+
+  if (id) {
+    users.where({ id }).first();
+
+    const promises = [users, this.getUserJokes(id)];
+
+    return Promise.all(promises).then(results => {
+      let [user, jokes] = results;
+
+      if (user) {
+        user.jokes = jokes;
+
+        return user;
+      } else {
+        return null;
+      }
+    });
+  }
+
+  return users;
 }
 
 function getUserJokes(id) {
