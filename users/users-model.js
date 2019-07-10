@@ -7,8 +7,22 @@ module.exports = {
   findById,
   update,
   remove,
-  getUserJokes
+  getUserJokes,
+  intToBoolean,
+  convertBoolean
 };
+
+function intToBoolean(int) {
+  return int === 1 ? true : false;
+}
+
+function convertBoolean(jokes) {
+  const result = {
+    ...jokes,
+    public: intToBoolean(jokes.public)
+  };
+  return result;
+}
 
 function find() {
   return db("users").select("id", "username");
@@ -52,6 +66,6 @@ function getUserJokes(id) {
   let loadJokes = db("jokes").where("user_id", id);
 
   return loadJokes.then(jokes => {
-    return jokes.map(joke => helper.convertBoolean(joke));
+    return jokes.map(joke => convertBoolean(joke));
   });
 }

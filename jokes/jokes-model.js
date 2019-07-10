@@ -34,12 +34,12 @@ function filter() {
 }
 
 function find() {
-  return db("jokes").select("id", "joke");
+  return db("jokes").select("id", "joke", "punchline");
 }
 
 function findById(id) {
   return db("jokes")
-    .select("id", "joke")
+    .select("id", "joke", "punchline")
     .where({ id })
     .first();
 }
