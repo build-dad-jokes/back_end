@@ -4,6 +4,7 @@ const Jokes = require("./jokes-model");
 const restricted = require("../auth/restricted-middleware");
 const checkRole = require("../auth/check-role-middleware");
 
+// tested - working
 router.get("/", (req, res) => {
   Jokes.find()
     .then(jokes => {
@@ -12,6 +13,7 @@ router.get("/", (req, res) => {
     .catch(error => res.send(error));
 });
 
+// tested - working
 router.get("/:id", restricted, checkRole("User"), (req, res) => {
   Jokes.findById(req.params.id)
     .then(joke => {
@@ -20,6 +22,7 @@ router.get("/:id", restricted, checkRole("User"), (req, res) => {
     .catch(error => res.send(error));
 });
 
+// tested - working
 router.post("/", restricted, checkRole("User"), (req, res) => {
   Jokes.add(req.body)
     .then(joke => {
@@ -31,6 +34,7 @@ router.post("/", restricted, checkRole("User"), (req, res) => {
     });
 });
 
+// tested - working
 router.put("/:id", restricted, checkRole("User"), (req, res) => {
   const { id } = req.params;
 

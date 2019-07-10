@@ -5,6 +5,7 @@ const Users = require("./users-model");
 const restricted = require("../auth/restricted-middleware");
 const checkRole = require("../auth/check-role-middleware");
 
+// tested - working
 router.get("/", restricted, checkRole("User"), (req, res) => {
   Users.find()
     .then(users => {
@@ -13,6 +14,7 @@ router.get("/", restricted, checkRole("User"), (req, res) => {
     .catch(error => res.send(error));
 });
 
+// tested - working
 router.get("/:id", restricted, checkRole("User"), (req, res) => {
   Users.findById(req.params.id)
     .then(user => {
@@ -21,6 +23,7 @@ router.get("/:id", restricted, checkRole("User"), (req, res) => {
     .catch(error => res.send(error));
 });
 
+// tested - working
 router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
   try {
     const { id } = req.params;
