@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcryptjs");
 
 const Users = require("./users-model");
 const restricted = require("../auth/restricted-middleware");
@@ -31,21 +32,22 @@ router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
   }
 });
 
-router.put("/:id", restricted, checkRole("User"), (req, res) => {
-  const { id } = req.params;
+router.put("/:id", restricted, checkRole("User"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    let newUser = req.body;
 
-  Users.update(id, req.body)
-    .then(joke => {
-      if (joke) {
-        res.json(joke);
-      } else {
-        res.status(404).json({ message: "user not found, wrong id" });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ message: "server error updating user" });
-    });
+    const hash = bcrypt.hashSync(newUser.password, 14);
+    newUser.password = hash;
+
+    const updateUser = await userDB.update(id, req.body);
+
+    updateUser
+      ? res.status(200).json({ message: "successfully updated credentials" })
+      : res.status(404).json({ message: "missing required fields" });
+  } catch (err) {
+    res.status(500).json({ success: false, err });
+  }
 });
 
 router.delete("/:id", restricted, checkRole("User"), (req, res) => {

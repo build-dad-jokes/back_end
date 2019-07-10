@@ -7,51 +7,51 @@ exports.seed = function(knex, Promise) {
       return knex("jokes").insert([
         {
           id: 1,
-          question:
-            "What do you call a mac ‘n’ cheese that gets all up in your face?",
-          answer: "Too close for comfort food!",
+          joke:
+            "What do you call a mac 'n' cheese that gets all up in your face?",
+          punchline: "Too close for comfort food!",
           public: true,
           user_id: 1
         },
         {
           id: 2,
-          question: "What concert costs just 45 cents?",
-          answer: "50 Cent featuring Nickelback!",
+          joke: "What concert costs just 45 cents?",
+          punchline: "50 Cent featuring Nickelback!",
           public: true,
           user_id: 1
         },
         {
           id: 3,
-          question: "Why did the scarecrow win an award?",
-          answer: "Because he was outstanding in his field!",
+          joke: "Why did the scarecrow win an award?",
+          punchline: "Because he was outstanding in his field!",
           public: true,
           user_id: 2
         },
         {
           id: 4,
-          question: "What do sprinters eat before a race?",
-          answer: "Nothing, they fast!",
+          joke: "What do sprinters eat before a race?",
+          punchline: "Nothing, they fast!",
           public: false,
           user_id: 1
         },
         {
           id: 5,
-          question: "Why couldn’t the bicycle stand up by itself?",
-          answer: "It was two tired!",
+          joke: "Why couldn't the bicycle stand up by itself?",
+          punchline: "It was two tired!",
           public: false,
           user_id: 2
         },
         {
           id: 6,
-          question: "Did you hear about the restaurant on the moon?",
-          answer: "Great food, no atmosphere!",
+          joke: "Did you hear about the restaurant on the moon?",
+          punchline: "Great food, no atmosphere!",
           public: false,
           user_id: 3
         },
         {
           id: 7,
-          question: "What do you call a fish with two knees?",
-          answer: "A two-knee fish!",
+          joke: "What do you call a fish with two knees?",
+          punchline: "A two-knee fish!",
           public: false,
           user_id: 3
         }
