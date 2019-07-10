@@ -18,9 +18,11 @@
     "url": "https://github.com/build-dad-jokes/back_end/issues"
   },
   "homepage": "https://github.com/build-dad-jokes/back_end#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "bcryptjs": "^2.4.3",
     "connect-session-knex": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -29,8 +31,6 @@
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.18.3",
-    "node": "^12.6.0",
-    "sqlite": "^3.0.3",
     "sqlite3": "^4.0.9"
   },
   "devDependencies": {
@@ -38,8 +38,5 @@
     "knex-cleaner": "^1.1.4",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }
