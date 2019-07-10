@@ -53,12 +53,7 @@ async function add(joke) {
 function update(id, changes) {
   return db("jokes")
     .where({ id })
-    .update(changes)
-    .then(() => {
-      return db("jokes")
-        .where({ id })
-        .first();
-    });
+    .update(changes, "*");
 }
 
 function remove(id) {

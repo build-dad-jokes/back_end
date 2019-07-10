@@ -35,6 +35,7 @@ router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
   }
 });
 
+// tested - working
 router.put("/:id", restricted, checkRole("User"), async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,7 +44,7 @@ router.put("/:id", restricted, checkRole("User"), async (req, res) => {
     const hash = bcrypt.hashSync(newUser.password, 14);
     newUser.password = hash;
 
-    const updateUser = await userDB.update(id, req.body);
+    const updateUser = await Users.update(id, req.body);
 
     updateUser
       ? res.status(200).json({ message: "successfully updated credentials" })
@@ -53,6 +54,7 @@ router.put("/:id", restricted, checkRole("User"), async (req, res) => {
   }
 });
 
+// tested - working
 router.delete("/:id", restricted, checkRole("User"), (req, res) => {
   Users.remove(req.params.id)
     .then(count => {

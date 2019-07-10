@@ -2,14 +2,14 @@
 
 # Authentication
 
-## Register - /api/auth/register
+## Register - api/auth/register
 
     "username" : "string",
     "password" : "string"
 
     username must be unique
 
-## Login - /api/auth/login
+## Login - api/auth/login
 
     "username": "string",
     "password": "string"
@@ -29,7 +29,7 @@
 
 ## GET
 
-### /api/users
+### api/users
 
     Returns list of users
     {
@@ -69,9 +69,15 @@
 
 ### api/users/:id
 
+    Body
+    {
+        "username": "string",
+        "password": "string
+    }
+
     Returns
     {
-
+        "message": "successfully updated credentials"
     }
 
 ## DELETE
@@ -80,14 +86,14 @@
 
     Returns
     {
-
+        "message": "user deleted"
     }
 
 # Jokes
 
 ## GET
 
-### /api/jokes
+### api/jokes
 
     Returns list of jokes
     {
@@ -96,11 +102,35 @@
         "punchline": "string"
     }
 
-### /api/jokes/:id
+### api/jokes/:id
 
     Returns a joke
     {
         "id": integer,
         "joke": "string",
         "punchline": "string"
+    }
+
+## POST
+
+### api/jokes
+
+    Body
+    {
+        "user_id": integer,
+        "joke": "string",
+        "punchline": "string
+    }
+
+## PUT
+
+### api/jokes/:id
+
+## DELETE
+
+### api/joke/:id
+
+    Returns
+    {
+        "message": "joke deleted"
     }
