@@ -1,34 +1,47 @@
-const db = require("../data/dbConfig.js");
-const jokeHelper = require("./joke-helper.js");
+const db = require("../data/dbConfig");
 
 module.exports = {
+  add,
   find,
   findById,
-  add,
   update,
   remove,
-  filter
+  filter,
+  intToBoolean,
+  convertBoolean
 };
 
-function find() {
-  let loadJokes = db("jokes");
+function intToBoolean(int) {
+  return int === 1 ? true : false;
+}
+
+function convertBoolean(jokes) {
+  const result = {
+    ...jokes,
+    public: intToBoolean(jokes.public)
+  };
+  return result;
+}
+
+function filter() {
+  let loadJokes = db("jokes").where({
+    public: true
+  });
 
   return loadJokes.then(jokes => {
-    return jokes.map(joke => jokeHelper.convertBoolean(joke));
+    return jokes.map(joke => helper.convertBoolean(joke));
   });
+}
+
+function find() {
+  return db("jokes").select("id", "joke");
 }
 
 function findById(id) {
   return db("jokes")
+    .select("id", "joke")
     .where({ id })
     .first();
-}
-
-function filter() {
-  let loadJokes = db("jokes").where({ public: true });
-  return loadJokes.then(jokes => {
-    return jokes.map(joke => jokeHelper.convertBoolean(joke));
-  });
 }
 
 async function add(joke) {
@@ -40,7 +53,12 @@ async function add(joke) {
 function update(id, changes) {
   return db("jokes")
     .where({ id })
-    .update(changes, "*");
+    .update(changes)
+    .then(() => {
+      return db("jokes")
+        .where({ id })
+        .first();
+    });
 }
 
 function remove(id) {
