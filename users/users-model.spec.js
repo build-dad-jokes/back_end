@@ -1,5 +1,5 @@
 const db = require("../data/dbConfig");
-const Users = require("./usersModel");
+const Users = require("./users-model");
 
 describe("users model", () => {
   beforeEach(() => {
@@ -8,7 +8,8 @@ describe("users model", () => {
 
   describe("insert()", () => {
     it("should insert the provided user into db", async () => {
-      await Users.insert({ username: "PB", password: "1234" });
+      await Users.add({ username: "PB", password: "1234" });
+      await Users.add({ username: "BP", password: "4321" });
 
       const users = await db("users");
       expect(users).toHaveLength(2);
@@ -16,8 +17,10 @@ describe("users model", () => {
   });
 
   describe("remove()", () => {
-    it("should remove pfunk from db by id", async () => {
-      //   await Users.insert({ username: "PB" });
+    it("should remove BP from db by id", async () => {
+      await Users.add({ username: "PB", password: "1234" });
+      await Users.add({ username: "BP", password: "4321" });
+
       await Users.remove(2);
 
       const users = await db("users");

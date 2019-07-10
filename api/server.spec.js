@@ -19,8 +19,8 @@ describe("GET /", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it('should return message: "api working"', async () => {
+  it('should return message: "Its alive!"', async () => {
     const res = await request(server).get("/");
-    expect(res.body).toEqual({ message: "api working" });
+    expect(res.body).toEqual({ message: "It's alive!" });
   });
 });

@@ -14,7 +14,7 @@ server.use("/api/users", usersRouter);
 server.use("/api/jokes", jokesRouter);
 
 server.get("/", (req, res) => {
-  res.send("It's alive!");
+  res.status(200).json({ message: "It's alive!" });
 });
 
 module.exports = server;
