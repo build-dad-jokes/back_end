@@ -1,22 +1,26 @@
 # Authentication
 
-## Register
+## Restricted Routes:
 
-POST
-/api/auth/register
-username - string, unique
-password - string
+| GET                 | PUT           | POST      | DELETE        |
+| ------------------- | ------------- | --------- | ------------- |
+| api/users           | api/users/:id | api/jokes | api/users/:id |
+| api/users/:id       | api/jokes/:id |           | api/jokes/:id |
+| api/users/:id/jokes |               |           |
+| api/jokes/:id       |               |           |
 
-## Login
+## Register - /api/auth/register
 
-POST
-/api/auth/login
-username - string
-password - string
+    "username" : "string",
+    "password" : "string"
 
-returns jwt token - must be sent back for restricted access
+    username must be unique
+
+## Login - /api/auth/login
+
+    "username": "string",
+    "password": "string"
+
+returns JWT token - must be sent back for access to restricted routes
 
 # Users
-
-GET
-/api/users
