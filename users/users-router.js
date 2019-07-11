@@ -2,6 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 
 const Users = require("./users-model");
+
 const restricted = require("../auth/restricted-middleware");
 const checkRole = require("../auth/check-role-middleware");
 
@@ -35,37 +36,28 @@ router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
   }
 });
 
-router.get(
-  "/:id/savedJokes",
-  restricted,
-  checkRole("User"),
-  async (req, res) => {
-    try {
-      const { id } = req.params;
-      const savedJokes = await Users.getSavedJokes(id);
+router.get("/:id/savedJokes", restricted, checkRole("User"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const savedJokes = await Users.getSavedJokes(id);
 
-      res.status(200).json(savedJokes);
-    } catch (error) {
-      res.status(500).json({ success: false, error });
-    }
+    res.status(200).json(savedJokes);
+  } catch ({ message }) {
+    res.status(500).json({ success: false, message });
   }
-);
+});
 
-// router.post(
-//   "/:id/savedJokes",
-//   restricted,
-//   checkRole("User"),
-//   async (req, res) => {
-//     try {
-//       const { id } = req.params;
-//       const jokeSaved = await Users.saveJoke(id);
+router.post("/:id/savedJokes", restricted, checkRole("User"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { joke_id, user_id } = req.body;
+    const jokeSaved = await Users.saveJoke({ joke_id, user_id }, id);
 
-//       res.status(201).json(jokeSaved);
-//     } catch (error) {
-//       res.status(500).json({ success: false, error });
-//     }
-//   }
-// );
+    res.status(201).json(jokeSaved);
+  } catch ({ message }) {
+    res.status(500).json({ success: false, message });
+  }
+});
 
 // tested - working
 router.put("/:id", restricted, checkRole("User"), async (req, res) => {

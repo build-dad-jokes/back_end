@@ -10,7 +10,7 @@ module.exports = {
   update,
   remove,
   getUserJokes,
-  // saveJoke,
+  saveJoke,
   intToBoolean,
   convertBoolean
 };
@@ -98,31 +98,23 @@ function getUserJokes(id) {
 }
 
 function getSavedJokes(id) {
-  if (id) {
-    return db("savedJokes").where("user_id", id);
-  }
+  // if (id) {
+  //   return db("savedJokes").where("user_id", id);
+  // }
 
   return db("savedJokes")
-    .join("jokes", "savedJokes.joke_id", " joke.id")
-    .join("users", "savedJokes.user_id", "users.id")
-    .select(
-      "savedJokes.id",
-      "users.username as saved_by",
-      "jokes.joke",
-      "jokes.punchline"
-    );
+    .where("savedJokes.user_id", id)
+    .join("jokes", "savedJokes.joke_id", "jokes.id")
+    .join("users", "jokes.user_id", "users.id")
+    .select("savedJokes.id", "users.username as created_by", "jokes.joke", "jokes.punchline");
 }
 
-// async function saveJoke(id) {
-//   const [id] = await db("savedJokes").insert(id);
+async function saveJoke(joke) {
+  const [id] = await db("savedJokes")
+    // .where({ id: user_id })
+    .insert(joke);
 
-//   return db("savedJokes")
-//     .join("jokes", "savedJokes.joke_id", " joke.id")
-//     .join("users", "savedJokes.user_id", "users.id")
-//     .select(
-//       "savedJokes.id",
-//       "users.username as saved_by",
-//       "jokes.joke",
-//       "jokes.punchline"
-//     );
-// }
+  return db("savedJokes")
+    .where({ id })
+    .first();
+}
