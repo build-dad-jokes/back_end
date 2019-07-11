@@ -2,6 +2,7 @@ const db = require("../data/dbConfig");
 
 module.exports = {
   get,
+  getSavedJokes,
   add,
   find,
   findBy,
@@ -9,6 +10,7 @@ module.exports = {
   update,
   remove,
   getUserJokes,
+  // saveJoke,
   intToBoolean,
   convertBoolean
 };
@@ -94,3 +96,33 @@ function getUserJokes(id) {
     return jokes.map(joke => convertBoolean(joke));
   });
 }
+
+function getSavedJokes(id) {
+  if (id) {
+    return db("savedJokes").where("user_id", id);
+  }
+
+  return db("savedJokes")
+    .join("jokes", "savedJokes.joke_id", " joke.id")
+    .join("users", "savedJokes.user_id", "users.id")
+    .select(
+      "savedJokes.id",
+      "users.username as saved_by",
+      "jokes.joke",
+      "jokes.punchline"
+    );
+}
+
+// async function saveJoke(id) {
+//   const [id] = await db("savedJokes").insert(id);
+
+//   return db("savedJokes")
+//     .join("jokes", "savedJokes.joke_id", " joke.id")
+//     .join("users", "savedJokes.user_id", "users.id")
+//     .select(
+//       "savedJokes.id",
+//       "users.username as saved_by",
+//       "jokes.joke",
+//       "jokes.punchline"
+//     );
+// }

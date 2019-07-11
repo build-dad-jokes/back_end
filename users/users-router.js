@@ -35,6 +35,38 @@ router.get("/:id/jokes", restricted, checkRole("User"), async (req, res) => {
   }
 });
 
+router.get(
+  "/:id/savedJokes",
+  restricted,
+  checkRole("User"),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const savedJokes = await Users.getSavedJokes(id);
+
+      res.status(200).json(savedJokes);
+    } catch (error) {
+      res.status(500).json({ success: false, error });
+    }
+  }
+);
+
+// router.post(
+//   "/:id/savedJokes",
+//   restricted,
+//   checkRole("User"),
+//   async (req, res) => {
+//     try {
+//       const { id } = req.params;
+//       const jokeSaved = await Users.saveJoke(id);
+
+//       res.status(201).json(jokeSaved);
+//     } catch (error) {
+//       res.status(500).json({ success: false, error });
+//     }
+//   }
+// );
+
 // tested - working
 router.put("/:id", restricted, checkRole("User"), async (req, res) => {
   try {

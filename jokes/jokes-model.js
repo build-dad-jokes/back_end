@@ -34,7 +34,18 @@ function filter() {
 }
 
 function find() {
-  return db("jokes").select("id", "joke", "punchline");
+  let loadJokes = db("jokes")
+    .join("users", "jokes.user_id", "users.id")
+    .select(
+      "jokes.id",
+      "jokes.joke",
+      "jokes.punchline",
+      "users.username as created_by"
+    );
+
+  return loadJokes.then(jokes => {
+    return jokes.map(joke => convertBoolean(joke));
+  });
 }
 
 function findById(id) {
@@ -53,7 +64,7 @@ async function add(joke) {
 function update(id, changes) {
   return db("jokes")
     .where({ id })
-    .update(changes, "*");
+    .update(changes);
 }
 
 function remove(id) {

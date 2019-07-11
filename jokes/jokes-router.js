@@ -8,7 +8,7 @@ const checkRole = require("../auth/check-role-middleware");
 router.get("/", (req, res) => {
   Jokes.find()
     .then(jokes => {
-      res.json(jokes);
+      res.status(200).json(jokes);
     })
     .catch(error => res.send(error));
 });
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 router.get("/:id", restricted, checkRole("User"), (req, res) => {
   Jokes.findById(req.params.id)
     .then(joke => {
-      res.json(joke);
+      res.status(200).json(joke);
     })
     .catch(error => res.send(error));
 });
@@ -35,21 +35,18 @@ router.post("/", restricted, checkRole("User"), (req, res) => {
 });
 
 // test -
-router.put("/:id", restricted, checkRole("User"), (req, res) => {
-  const { id } = req.params;
-
-  Jokes.update(id, req.body)
-    .then(joke => {
-      if (joke) {
-        res.json(joke);
-      } else {
-        res.status(404).json({ message: "joke not found, wrong id" });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ message: "server error updating joke" });
-    });
+router.put("/:id", restricted, checkRole("User"), async (req, res) => {
+  try {
+    const updateJoke = await Jokes.update(req.params.id, req.body);
+    if (joke) {
+      res.status(200).json(joke);
+    } else {
+      res.status(404).json({ message: "joke not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "server error updating joke" });
+  }
 });
 
 // Mylynh code
