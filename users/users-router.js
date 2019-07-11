@@ -16,7 +16,7 @@ router.get("/", restricted, checkRole("User"), (req, res) => {
 
 // tested - working
 router.get("/:id", restricted, checkRole("User"), (req, res) => {
-  Users.findById(req.params.id)
+  Users.get(req.params.id)
     .then(user => {
       res.json(user);
     })
