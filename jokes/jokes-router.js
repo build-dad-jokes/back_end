@@ -38,18 +38,18 @@ router.post("/", restricted, checkRole("User"), (req, res) => {
 router.put("/:id", restricted, checkRole("User"), async (req, res) => {
   try {
     const updateJoke = await Jokes.update(req.params.id, req.body);
-    if (joke) {
-      res.status(200).json(joke);
+    if (updateJoke) {
+      res.status(200).json(updateJoke);
     } else {
       res.status(404).json({ message: "joke not found" });
     }
-  } catch (error) {
-    console.log(error);
+  } catch ({ message }) {
+    console.log({ message });
     res.status(500).json({ message: "server error updating joke" });
   }
 });
 
-// Mylynh code
+//  Mylynh code
 // router.put("/:id", restricted, checkRole("User"), async (req, res) => {
 //   try {
 //     const { id } = req.params;
@@ -58,8 +58,8 @@ router.put("/:id", restricted, checkRole("User"), async (req, res) => {
 //     updateJoke
 //       ? res.status(200).json({ message: "successfully updated joke" })
 //       : res.status(404).json({ message: "joke not found" });
-//   } catch (err) {
-//     res.status(500).json({ message: "something is funky" });
+//   } catch ({ message }) {
+//     res.status(500).json({ message: "something is funky", message });
 //   }
 // });
 

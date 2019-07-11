@@ -36,12 +36,7 @@ function filter() {
 function find() {
   let loadJokes = db("jokes")
     .join("users", "jokes.user_id", "users.id")
-    .select(
-      "jokes.id",
-      "jokes.joke",
-      "jokes.punchline",
-      "users.username as created_by"
-    );
+    .select("jokes.id", "jokes.joke", "jokes.punchline", "users.username as created_by");
 
   return loadJokes.then(jokes => {
     return jokes.map(joke => convertBoolean(joke));
