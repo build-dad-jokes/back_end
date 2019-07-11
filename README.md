@@ -126,6 +126,13 @@
 
 ### api/jokes/:id
 
+    Body
+    {
+        "id": integer,
+        "joke": "string",
+        "punchline": "string"
+    }
+
 ## DELETE
 
 ### api/joke/:id

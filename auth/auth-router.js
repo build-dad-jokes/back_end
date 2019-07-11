@@ -10,8 +10,8 @@ router.post("/register", (req, res) => {
   user.password = hash;
 
   Users.add(user)
-    .then(saved => {
-      res.status(201).json(saved);
+    .then(user => {
+      res.status(201).json(user);
     })
     .catch(error => {
       res.status(500).json(error);
@@ -29,7 +29,8 @@ router.post("/login", (req, res) => {
         res.status(200).json({
           message: `Welcome ${user.username}!, have a token...`,
           token,
-          roles: token.roles
+          roles: token.roles,
+          id: user.id
         });
       } else {
         res.status(401).json({ message: "Invalid Credentials" });

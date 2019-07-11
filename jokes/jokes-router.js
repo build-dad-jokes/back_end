@@ -34,7 +34,7 @@ router.post("/", restricted, checkRole("User"), (req, res) => {
     });
 });
 
-// test -
+// tested - working
 router.put("/:id", restricted, checkRole("User"), async (req, res) => {
   try {
     const updateJoke = await Jokes.update(req.params.id, req.body);
@@ -48,20 +48,6 @@ router.put("/:id", restricted, checkRole("User"), async (req, res) => {
     res.status(500).json({ message: "server error updating joke" });
   }
 });
-
-//  Mylynh code
-// router.put("/:id", restricted, checkRole("User"), async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateJoke = await Jokes.update(id, req.body);
-
-//     updateJoke
-//       ? res.status(200).json({ message: "successfully updated joke" })
-//       : res.status(404).json({ message: "joke not found" });
-//   } catch ({ message }) {
-//     res.status(500).json({ message: "something is funky", message });
-//   }
-// });
 
 router.delete("/:id", restricted, checkRole("User"), (req, res) => {
   Jokes.remove(req.params.id)
