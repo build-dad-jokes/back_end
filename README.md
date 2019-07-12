@@ -14,7 +14,7 @@
     "username": "string",
     "password": "string"
 
-    returns JWT token - must be sent back for access to restricted routes
+    returns user id, username, and JWT. JWT must be sent back for access to restricted routes
 
 ## Restricted Routes:
 
@@ -119,7 +119,8 @@
     {
         "user_id": integer,
         "joke": "string",
-        "punchline": "string
+        "punchline": "string,
+        "public": boolean
     }
 
 ## PUT
@@ -130,7 +131,8 @@
     {
         "id": integer,
         "joke": "string",
-        "punchline": "string"
+        "punchline": "string",
+        "public": boolean
     }
 
 ## DELETE

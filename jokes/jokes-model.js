@@ -29,7 +29,7 @@ function filter() {
   });
 
   return loadJokes.then(jokes => {
-    return jokes.map(joke => helper.convertBoolean(joke));
+    return jokes.map(joke => convertBoolean(joke));
   });
 }
 
