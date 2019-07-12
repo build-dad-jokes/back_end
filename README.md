@@ -2,6 +2,10 @@
 
 # Authentication
 
+    Seeded login
+    username: pfunk
+    password 1234
+
 ## Register - api/auth/register
 
     "username" : "string",
@@ -14,7 +18,7 @@
     "username": "string",
     "password": "string"
 
-    returns user id, username, and JWT. JWT must be sent back for access to restricted routes
+    returns user id and JWT. JWT must be sent back for access to restricted routes
 
 ## Restricted Routes:
 
@@ -42,7 +46,19 @@
     Returns a users id and username
     {
         "id": integer,
-        "username": "string"
+        "username": "string",
+        "password": "string",
+        "jokes": [
+            {
+                "id": integer,
+                "joke": "string",
+                "punchline": "string",
+                "public": boolean,
+                "user_id": integer,
+                "created_at": date time,
+                "updated_at": date time
+            }
+        ]
     }
 
 ### api/users/:id/jokes
@@ -99,7 +115,9 @@
     {
         "id": integer,
         "joke": "string",
-        "punchline": "string"
+        "punchline": "string",
+        "created_by": "string,
+        "public": boolean
     }
 
 ### api/jokes/:id
@@ -142,4 +160,33 @@
     Returns
     {
         "message": "joke deleted"
+    }
+
+# Saved Jokes
+
+## api/users/:id/savedJokes
+
+### GET
+
+    Returns
+    {
+        "id": integer,
+        "created_by": "string",
+        "joke": "string",
+        "punchline": "string"
+    }
+
+### POST
+
+    Body
+    {
+        "joke_id": integer,
+        "user_id": integer
+    }
+
+    Returns
+    {
+        "id": integer,
+        "user_id": integer,
+        "joke_id": integer
     }
